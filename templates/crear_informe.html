@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear informe de Mantenimiento</title>
+</head>
+<body>
+    <h1>Crear informe de Mantenimiento</h1>
+    <form action="/crear_informe" method="post" enctype="multipart/form-data">
+        <label for="nombre_equipo">Nombre del equipo:</label>
+        <input type="text" id="nombre_equipo" name="nombre_equipo" required><br><br>
+
+        <label for="horometro">Horómetro:</label>
+        <input type="text" id="horometro" name="horometro" required><br><br>
+
+        <label for="tipo_mantenimiento">Tipo de Mantenimiento:</label>
+        <input type="text" id="tipo_mantenimiento" name="tipo_mantenimiento" required><br><br>
+
+        <label for="sede">Sede:</label>
+        <input type="text" id="sede" name="sede" required><br><br>
+
+        <label for="descripcion_falla">Descripción de la falla:</label><br>
+        <textarea id="descripcion_falla" name="descripcion_falla" required></textarea><br><br>
+
+        <label for="conclusiones">Conclusiones:</label><br>
+        <textarea id="conclusiones" name="conclusiones" required></textarea><br><br>
+
+        <label for="num_personas">Número de personas encargadas:</label>
+        <input type="number" id="num_personas" name="num_personas" required><br><br>
+
+        <fieldset>
+            <legend>Personal encargado de realizar mantenimiento:</legend>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Nombre</th>
+                        <th>Cargo</th>
+                        <th>Tarea a realizar</th>
+                    </tr>
+                </thead>
+                <tbody id="personal_encargado">
+                </tbody>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend>Fotos del equipo:</legend>
+            <input type="file" name="imagen_0"><br><br>
+            <input type="file" name="imagen_1"><br><br>
+            <input type="file" name="imagen_2"><br><br>
+            <input type="file" name="imagen_3"><br><br>
+        </fieldset>
+
+        <input type="submit" value="Crear informe">
+    </form>
+
+    <script>
+        document.getElementById("num_personas").addEventListener("change", function() {
+            var numPersonas = parseInt(this.value);
+            var personalEncargado = document.getElementById("personal_encargado");
+            personalEncargado.innerHTML = "";
+
+            for (var i = 0; i < numPersonas; i++) {
+                var row = document.createElement("tr");
+
+                var numCell = document.createElement("td");
+                numCell.textContent = i + 1;
+                row.appendChild(numCell);
+
+                var nombreCell = document.createElement("td");
+                var nombreInput = document.createElement("input");
+                nombreInput.setAttribute("type", "text");
+                nombreInput.setAttribute("name", "nombre_persona_" + i);
+                nombreInput.setAttribute("required", "required");
+                nombreCell.appendChild(nombreInput);
+                row.appendChild(nombreCell);
+                var cargoCell = document.createElement("td");
+                var cargoInput = document.createElement("input");
+                cargoInput.setAttribute("type", "text");
+                cargoInput.setAttribute("name", "cargo_persona_" + i);
+                cargoInput.setAttribute("required", "required");
+                cargoCell.appendChild(cargoInput);
+                row.appendChild(cargoCell);
+
+                var tareaCell = document.createElement("td");
+                var tareaInput = document.createElement("input");
+                tareaInput.setAttribute("type", "text");
+                tareaInput.setAttribute("name", "tarea_persona_" + i);
+                tareaInput.setAttribute("required", "required");
+                tareaCell.appendChild(tareaInput);
+                row.appendChild(tareaCell);
+
+                personalEncargado.appendChild(row);
+            }
+        });
+    </script>
+</body>
+</html>
